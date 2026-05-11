@@ -117,5 +117,6 @@ function Index() {
 
       <CreateListDialog open={createOpen} onOpenChange={setCreateOpen} />
     </div>
+    </>
   );
 }
