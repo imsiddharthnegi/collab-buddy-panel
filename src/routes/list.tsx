@@ -185,6 +185,7 @@ function ListView() {
         )}
       </div>
     </div>
+    </TooltipProvider>
   );
 }
 
