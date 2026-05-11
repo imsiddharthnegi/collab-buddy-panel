@@ -74,13 +74,29 @@ function Index() {
         </div>
         <div className="flex justify-center gap-3">
           {session ? (
-            <Button onClick={() => setOpen(true)} size="lg" className="gap-2">
-              <Share2 className="h-4 w-4" />
-              Share list
-            </Button>
+            <>
+              <Button
+                onClick={() => setCreateOpen(true)}
+                size="lg"
+                className="auth-primary gap-2"
+              >
+                <Plus className="h-4 w-4" />
+                New list
+              </Button>
+              <Button
+                onClick={() => setOpen(true)}
+                size="lg"
+                variant="outline"
+                className="auth-secondary gap-2"
+              >
+                <Share2 className="h-4 w-4" />
+                Share list
+              </Button>
+            </>
           ) : (
             <Button
               size="lg"
+              className="auth-primary"
               onClick={() => navigate({ to: "/auth", search: { mode: "signup" } })}
             >
               Get started
@@ -98,6 +114,8 @@ function Index() {
         isCreator={false}
         onLeave={() => setOpen(false)}
       />
+
+      <CreateListDialog open={createOpen} onOpenChange={setCreateOpen} />
     </div>
   );
 }
