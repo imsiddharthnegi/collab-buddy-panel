@@ -83,7 +83,7 @@ function ListView() {
     if (!text) return;
     setTasks((prev) => [
       ...prev,
-      { id: crypto.randomUUID(), text, completed: false },
+      { id: crypto.randomUUID(), text, completed: false, creator: CURRENT_USER },
     ]);
     setDraft("");
   };
