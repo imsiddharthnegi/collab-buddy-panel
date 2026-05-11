@@ -4,13 +4,48 @@ import { ArrowLeft, Plus, Trash2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 import { cn } from "@/lib/utils";
+
+type Creator = {
+  name: string;
+};
 
 type Task = {
   id: string;
   text: string;
   completed: boolean;
+  creator: Creator;
 };
+
+const CURRENT_USER: Creator = { name: "You" };
+
+function initialsOf(name: string) {
+  if (name.toLowerCase() === "you") return "You";
+  return name
+    .split(/\s+/)
+    .filter(Boolean)
+    .slice(0, 2)
+    .map((p) => p[0]?.toUpperCase() ?? "")
+    .join("");
+}
+
+// Stable muted color per creator name
+function avatarTone(name: string) {
+  const tones = [
+    "bg-muted text-muted-foreground",
+    "bg-secondary text-secondary-foreground",
+    "bg-accent text-accent-foreground",
+  ];
+  let hash = 0;
+  for (let i = 0; i < name.length; i++) hash = (hash * 31 + name.charCodeAt(i)) | 0;
+  return tones[Math.abs(hash) % tones.length];
+}
 
 export const Route = createFileRoute("/list")({
   component: ListView,
@@ -48,7 +83,7 @@ function ListView() {
     if (!text) return;
     setTasks((prev) => [
       ...prev,
-      { id: crypto.randomUUID(), text, completed: false },
+      { id: crypto.randomUUID(), text, completed: false, creator: CURRENT_USER },
     ]);
     setDraft("");
   };
@@ -62,6 +97,7 @@ function ListView() {
     setTasks((prev) => prev.filter((t) => t.id !== id));
 
   return (
+    <TooltipProvider delayDuration={150}>
     <div className="flex min-h-screen flex-col px-4 py-8 pb-32 sm:px-6 sm:py-16 sm:pb-16">
       <div className="mx-auto flex w-full max-w-2xl flex-1 flex-col">
         <Link
@@ -149,6 +185,7 @@ function ListView() {
         )}
       </div>
     </div>
+    </TooltipProvider>
   );
 }
 
@@ -237,6 +274,20 @@ function TaskRow({
       >
         {task.text}
       </span>
+      <Tooltip delayDuration={150}>
+        <TooltipTrigger asChild>
+          <span
+            aria-label={`Added by ${task.creator.name}`}
+            className={cn(
+              "flex h-6 w-6 shrink-0 items-center justify-center rounded-full text-[10px] font-medium leading-none ring-1 ring-border/60",
+              avatarTone(task.creator.name),
+            )}
+          >
+            {initialsOf(task.creator.name)}
+          </span>
+        </TooltipTrigger>
+        <TooltipContent side="top">Added by {task.creator.name}</TooltipContent>
+      </Tooltip>
       <button
         type="button"
         onClick={handleDelete}
