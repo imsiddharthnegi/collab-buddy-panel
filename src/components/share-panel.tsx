@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Check, Copy, Link2, LogOut, Users } from "lucide-react";
 import {
   Sheet,
