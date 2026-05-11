@@ -25,9 +25,9 @@ const IndexRoute = IndexRouteImport.update({
   getParentRoute: () => rootRouteImport,
 } as any)
 const ListIdRoute = ListIdRouteImport.update({
-  id: '/$id',
-  path: '/$id',
-  getParentRoute: () => ListRoute,
+  id: '/list/$id',
+  path: '/list/$id',
+  getParentRoute: () => rootRouteImport,
 } as any)
 const JoinSlugRoute = JoinSlugRouteImport.update({
   id: '/join/$slug',
@@ -66,6 +66,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AuthRoute: typeof AuthRoute
   JoinSlugRoute: typeof JoinSlugRoute
+  ListIdRoute: typeof ListIdRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -86,10 +87,10 @@ declare module '@tanstack/react-router' {
     }
     '/list/$id': {
       id: '/list/$id'
-      path: '/$id'
+      path: '/list/$id'
       fullPath: '/list/$id'
       preLoaderRoute: typeof ListIdRouteImport
-      parentRoute: typeof ListRoute
+      parentRoute: typeof rootRouteImport
     }
     '/join/$slug': {
       id: '/join/$slug'
@@ -105,6 +106,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AuthRoute: AuthRoute,
   JoinSlugRoute: JoinSlugRoute,
+  ListIdRoute: ListIdRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

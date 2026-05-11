@@ -24,11 +24,11 @@ function JoinList() {
       const { data: sessionData } = await supabase.auth.getSession();
       
       if (!sessionData.session?.user) {
-        // Redirect to auth with return URL
+        // Redirect to auth - they'll return here after login
         toast.info("Please sign in to join this list");
         navigate({ 
           to: "/auth", 
-          search: { mode: "login", returnTo: `/join/${slug}` } 
+          search: { mode: "login" } 
         });
         return;
       }
