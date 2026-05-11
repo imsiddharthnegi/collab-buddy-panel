@@ -221,19 +221,19 @@ function TaskRow({
 
   return (
     <li
-      className="task-row group flex items-center gap-4 rounded-lg px-4 py-3"
+      className="task-row group flex items-center gap-3 rounded-lg px-3 py-4 sm:gap-4 sm:px-4 sm:py-3"
       data-leaving={leaving || undefined}
     >
       <Checkbox
         checked={task.completed}
         onCheckedChange={onToggle}
-        className="task-checkbox h-5 w-5 rounded-full border-muted-foreground/40 data-[state=checked]:bg-foreground data-[state=checked]:text-background data-[state=checked]:border-foreground"
+        className="task-checkbox h-6 w-6 shrink-0 rounded-full border-muted-foreground/40 data-[state=checked]:bg-foreground data-[state=checked]:text-background data-[state=checked]:border-foreground sm:h-5 sm:w-5"
         aria-label={task.completed ? "Mark as active" : "Mark as completed"}
       />
       <span
         onClick={onToggle}
         data-completed={task.completed || undefined}
-        className="task-text flex-1 cursor-pointer select-none text-base leading-relaxed text-foreground"
+        className="task-text min-w-0 flex-1 cursor-pointer select-none break-words text-base leading-relaxed text-foreground"
       >
         {task.text}
       </span>
@@ -241,7 +241,7 @@ function TaskRow({
         type="button"
         onClick={handleDelete}
         aria-label="Delete task"
-        className="task-delete rounded-md p-1.5 text-muted-foreground transition hover:bg-destructive/10 hover:text-destructive"
+        className="task-delete shrink-0 rounded-md p-2 text-muted-foreground transition hover:bg-destructive/10 hover:text-destructive sm:p-1.5"
       >
         <Trash2 className="h-4 w-4" />
       </button>
