@@ -62,7 +62,7 @@ function ListView() {
     setTasks((prev) => prev.filter((t) => t.id !== id));
 
   return (
-    <div className="flex min-h-screen flex-col px-6 py-10 sm:py-16">
+    <div className="flex min-h-screen flex-col px-4 py-8 pb-32 sm:px-6 sm:py-16 sm:pb-16">
       <div className="mx-auto flex w-full max-w-2xl flex-1 flex-col">
         <Link
           to="/"
@@ -72,11 +72,11 @@ function ListView() {
           Back
         </Link>
 
-        <header className="mt-8 mb-12 space-y-2">
+        <header className="mt-6 mb-8 space-y-2 sm:mt-8 sm:mb-12">
           <p className="text-sm font-medium tracking-wide text-muted-foreground">
             Shared list
           </p>
-          <h1 className="text-4xl font-bold tracking-tight sm:text-5xl">
+          <h1 className="break-words text-3xl font-bold leading-tight tracking-tight sm:text-5xl">
             Weekend Trip Plans
           </h1>
         </header>
@@ -116,8 +116,8 @@ function ListView() {
         )}
 
         {showAddBar && (
-          <div className="mt-12">
-            <div className="flex items-center gap-3 rounded-xl border border-border bg-card p-2 pl-4 transition focus-within:border-foreground/40">
+          <div className="fixed inset-x-0 bottom-0 z-20 border-t border-border bg-background/95 px-4 py-3 backdrop-blur supports-[backdrop-filter]:bg-background/80 sm:static sm:mt-12 sm:border-0 sm:bg-transparent sm:p-0 sm:backdrop-blur-0">
+            <div className="mx-auto flex w-full max-w-2xl items-center gap-3 rounded-xl border border-border bg-card p-2 pl-4 transition focus-within:border-foreground/40">
               <Plus className="h-4 w-4 text-muted-foreground" />
               <Input
                 ref={inputRef}
@@ -140,7 +140,7 @@ function ListView() {
                 type="button"
                 onClick={addTask}
                 disabled={!draft.trim()}
-                className="auth-primary h-9 px-4"
+                className="auth-primary h-10 px-4 sm:h-9"
               >
                 Add
               </Button>
@@ -221,19 +221,19 @@ function TaskRow({
 
   return (
     <li
-      className="task-row group flex items-center gap-4 rounded-lg px-4 py-3"
+      className="task-row group flex items-center gap-3 rounded-lg px-3 py-4 sm:gap-4 sm:px-4 sm:py-3"
       data-leaving={leaving || undefined}
     >
       <Checkbox
         checked={task.completed}
         onCheckedChange={onToggle}
-        className="task-checkbox h-5 w-5 rounded-full border-muted-foreground/40 data-[state=checked]:bg-foreground data-[state=checked]:text-background data-[state=checked]:border-foreground"
+        className="task-checkbox h-6 w-6 shrink-0 rounded-full border-muted-foreground/40 data-[state=checked]:bg-foreground data-[state=checked]:text-background data-[state=checked]:border-foreground sm:h-5 sm:w-5"
         aria-label={task.completed ? "Mark as active" : "Mark as completed"}
       />
       <span
         onClick={onToggle}
         data-completed={task.completed || undefined}
-        className="task-text flex-1 cursor-pointer select-none text-base leading-relaxed text-foreground"
+        className="task-text min-w-0 flex-1 cursor-pointer select-none break-words text-base leading-relaxed text-foreground"
       >
         {task.text}
       </span>
@@ -241,7 +241,7 @@ function TaskRow({
         type="button"
         onClick={handleDelete}
         aria-label="Delete task"
-        className="task-delete rounded-md p-1.5 text-muted-foreground transition hover:bg-destructive/10 hover:text-destructive"
+        className="task-delete shrink-0 rounded-md p-2 text-muted-foreground transition hover:bg-destructive/10 hover:text-destructive sm:p-1.5"
       >
         <Trash2 className="h-4 w-4" />
       </button>

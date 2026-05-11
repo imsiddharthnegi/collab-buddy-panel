@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Check, Copy, Link2, LogOut, Users } from "lucide-react";
 import {
   Sheet,
@@ -65,9 +65,21 @@ export function SharePanel({
     }
   };
 
+  const [isMobile, setIsMobile] = useState(false);
+  useEffect(() => {
+    const mq = window.matchMedia("(max-width: 639px)");
+    const update = () => setIsMobile(mq.matches);
+    update();
+    mq.addEventListener("change", update);
+    return () => mq.removeEventListener("change", update);
+  }, []);
+
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetContent side="right" className="w-full sm:max-w-md flex flex-col gap-6">
+      <SheetContent
+        side={isMobile ? "bottom" : "right"}
+        className="flex w-full flex-col gap-6 sm:max-w-md data-[state=open]:max-sm:rounded-t-2xl max-sm:max-h-[90vh] max-sm:h-auto"
+      >
         <SheetHeader className="space-y-1 px-0">
           <p className="text-xs font-medium uppercase tracking-wider text-muted-foreground">
             Share list
