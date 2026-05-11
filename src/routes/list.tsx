@@ -62,7 +62,7 @@ function ListView() {
     setTasks((prev) => prev.filter((t) => t.id !== id));
 
   return (
-    <div className="flex min-h-screen flex-col px-6 py-10 sm:py-16">
+    <div className="flex min-h-screen flex-col px-4 py-8 pb-32 sm:px-6 sm:py-16 sm:pb-16">
       <div className="mx-auto flex w-full max-w-2xl flex-1 flex-col">
         <Link
           to="/"
@@ -72,11 +72,11 @@ function ListView() {
           Back
         </Link>
 
-        <header className="mt-8 mb-12 space-y-2">
+        <header className="mt-6 mb-8 space-y-2 sm:mt-8 sm:mb-12">
           <p className="text-sm font-medium tracking-wide text-muted-foreground">
             Shared list
           </p>
-          <h1 className="text-4xl font-bold tracking-tight sm:text-5xl">
+          <h1 className="break-words text-3xl font-bold leading-tight tracking-tight sm:text-5xl">
             Weekend Trip Plans
           </h1>
         </header>
