@@ -65,7 +65,14 @@ export function SharePanel({
     }
   };
 
-  const isMobile = typeof window !== "undefined" && window.matchMedia("(max-width: 639px)").matches;
+  const [isMobile, setIsMobile] = useState(false);
+  useEffect(() => {
+    const mq = window.matchMedia("(max-width: 639px)");
+    const update = () => setIsMobile(mq.matches);
+    update();
+    mq.addEventListener("change", update);
+    return () => mq.removeEventListener("change", update);
+  }, []);
 
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
