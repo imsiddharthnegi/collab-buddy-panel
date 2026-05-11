@@ -62,8 +62,8 @@ function ListView() {
     setTasks((prev) => prev.filter((t) => t.id !== id));
 
   return (
-    <div className="min-h-screen px-6 py-10 sm:py-16">
-      <div className="mx-auto w-full max-w-2xl">
+    <div className="flex min-h-screen flex-col px-6 py-10 sm:py-16">
+      <div className="mx-auto flex w-full max-w-2xl flex-1 flex-col">
         <Link
           to="/"
           className="inline-flex items-center gap-1.5 text-sm text-muted-foreground transition hover:text-foreground"
@@ -81,8 +81,8 @@ function ListView() {
           </h1>
         </header>
 
-        {isEmpty ? (
-          <EmptyState onAdd={() => inputRef.current?.focus()} />
+        {isEmpty && !composing ? (
+          <EmptyState onAdd={startComposing} />
         ) : (
           <>
             <Section title="Active Tasks" count={active.length}>
@@ -115,34 +115,59 @@ function ListView() {
           </>
         )}
 
-        <div className="mt-12">
-          <div className="flex items-center gap-3 rounded-xl border border-border bg-card p-2 pl-4 transition focus-within:border-foreground/40">
-            <Plus className="h-4 w-4 text-muted-foreground" />
-            <Input
-              ref={inputRef}
-              value={draft}
-              onChange={(e) => setDraft(e.target.value)}
-              onKeyDown={(e) => {
-                if (e.key === "Enter") {
-                  e.preventDefault();
-                  addTask();
-                }
-              }}
-              placeholder="Add a task"
-              maxLength={200}
-              className="h-11 flex-1 border-0 bg-transparent px-0 text-base shadow-none focus-visible:ring-0"
-            />
-            <Button
-              type="button"
-              onClick={addTask}
-              disabled={!draft.trim()}
-              className="auth-primary h-9 px-4"
-            >
-              Add
-            </Button>
+        {showAddBar && (
+          <div className="mt-12">
+            <div className="flex items-center gap-3 rounded-xl border border-border bg-card p-2 pl-4 transition focus-within:border-foreground/40">
+              <Plus className="h-4 w-4 text-muted-foreground" />
+              <Input
+                ref={inputRef}
+                value={draft}
+                onChange={(e) => setDraft(e.target.value)}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter") {
+                    e.preventDefault();
+                    addTask();
+                  } else if (e.key === "Escape" && isEmpty) {
+                    setComposing(false);
+                    setDraft("");
+                  }
+                }}
+                placeholder="Add a task"
+                maxLength={200}
+                className="h-11 flex-1 border-0 bg-transparent px-0 text-base shadow-none focus-visible:ring-0"
+              />
+              <Button
+                type="button"
+                onClick={addTask}
+                disabled={!draft.trim()}
+                className="auth-primary h-9 px-4"
+              >
+                Add
+              </Button>
+            </div>
           </div>
-        </div>
+        )}
       </div>
+    </div>
+  );
+}
+
+function EmptyState({ onAdd }: { onAdd: () => void }) {
+  return (
+    <div className="flex flex-1 flex-col items-center justify-center py-16 text-center">
+      <div className="flex h-16 w-16 items-center justify-center rounded-full border border-border text-muted-foreground">
+        <Plus className="h-7 w-7" strokeWidth={1.75} />
+      </div>
+      <p className="mt-6 text-base text-muted-foreground">
+        Start by adding your first task.
+      </p>
+      <Button
+        type="button"
+        onClick={onAdd}
+        className="auth-primary mt-8 h-11 px-5"
+      >
+        Add your first task
+      </Button>
     </div>
   );
 }
