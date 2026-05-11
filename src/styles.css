@@ -141,5 +141,71 @@
   body {
     background-color: var(--color-background);
     color: var(--color-foreground);
+    font-feature-settings: "ss01", "cv11";
+  }
+}
+
+@layer components {
+  .auth-shell {
+    background:
+      radial-gradient(
+        ellipse 60% 50% at 50% 0%,
+        oklch(0.26 0.04 256 / 0.6),
+        transparent 70%
+      ),
+      var(--color-background);
+  }
+
+  .auth-headline {
+    letter-spacing: -0.02em;
+  }
+
+  .auth-input {
+    height: 3rem;
+    background-color: oklch(0.22 0.025 256);
+    border-color: oklch(0.3 0.025 256);
+    color: var(--color-foreground);
+    transition:
+      border-color 200ms ease,
+      box-shadow 200ms ease,
+      background-color 200ms ease;
+  }
+  .auth-input::placeholder {
+    color: oklch(0.6 0.015 256);
+  }
+  .auth-input:focus-visible {
+    background-color: oklch(0.24 0.025 256);
+    border-color: oklch(0.5 0.02 256);
+    box-shadow: 0 0 0 3px oklch(0.5 0.02 256 / 0.18);
+    outline: none;
+  }
+
+  .auth-primary {
+    background-color: var(--color-foreground);
+    color: var(--color-background);
+    border-radius: var(--radius-lg);
+    font-weight: 500;
+    transition:
+      transform 150ms ease,
+      background-color 200ms ease,
+      opacity 200ms ease;
+  }
+  .auth-primary:hover {
+    background-color: oklch(0.92 0.005 250);
+  }
+  .auth-primary:active {
+    transform: scale(0.99);
+  }
+
+  .auth-secondary {
+    background-color: transparent;
+    border-color: oklch(0.3 0.025 256);
+    color: var(--color-foreground);
+    border-radius: var(--radius-lg);
+    transition: background-color 200ms ease;
+  }
+  .auth-secondary:hover {
+    background-color: oklch(0.24 0.025 256);
+    color: var(--color-foreground);
   }
 }
