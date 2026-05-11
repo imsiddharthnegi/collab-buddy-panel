@@ -74,38 +74,45 @@ function ListView() {
           </h1>
         </header>
 
-        <Section title="Active Tasks" count={active.length}>
-          {active.length === 0 ? (
-            <EmptyRow text="Nothing active. Add a task below." />
-          ) : (
-            active.map((task) => (
-              <TaskRow
-                key={task.id}
-                task={task}
-                onToggle={() => toggle(task.id)}
-                onDelete={() => remove(task.id)}
-              />
-            ))
-          )}
-        </Section>
+        {isEmpty ? (
+          <EmptyState onAdd={() => inputRef.current?.focus()} />
+        ) : (
+          <>
+            <Section title="Active Tasks" count={active.length}>
+              {active.length === 0 ? (
+                <EmptyRow text="Nothing active. Add a task below." />
+              ) : (
+                active.map((task) => (
+                  <TaskRow
+                    key={task.id}
+                    task={task}
+                    onToggle={() => toggle(task.id)}
+                    onDelete={() => remove(task.id)}
+                  />
+                ))
+              )}
+            </Section>
 
-        {completed.length > 0 && (
-          <Section title="Completed Tasks" count={completed.length}>
-            {completed.map((task) => (
-              <TaskRow
-                key={task.id}
-                task={task}
-                onToggle={() => toggle(task.id)}
-                onDelete={() => remove(task.id)}
-              />
-            ))}
-          </Section>
+            {completed.length > 0 && (
+              <Section title="Completed Tasks" count={completed.length}>
+                {completed.map((task) => (
+                  <TaskRow
+                    key={task.id}
+                    task={task}
+                    onToggle={() => toggle(task.id)}
+                    onDelete={() => remove(task.id)}
+                  />
+                ))}
+              </Section>
+            )}
+          </>
         )}
 
         <div className="mt-12">
           <div className="flex items-center gap-3 rounded-xl border border-border bg-card p-2 pl-4 transition focus-within:border-foreground/40">
             <Plus className="h-4 w-4 text-muted-foreground" />
             <Input
+              ref={inputRef}
               value={draft}
               onChange={(e) => setDraft(e.target.value)}
               onKeyDown={(e) => {
