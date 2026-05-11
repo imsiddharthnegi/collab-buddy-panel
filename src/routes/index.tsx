@@ -1,11 +1,12 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
-import { Share2, LogOut, Plus } from "lucide-react";
+import { Share2, Plus } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import type { Session } from "@supabase/supabase-js";
 import { Button } from "@/components/ui/button";
 import { SharePanel, type Collaborator } from "@/components/share-panel";
 import { CreateListDialog } from "@/components/create-list-dialog";
+import { AppHeader } from "@/components/app-header";
 
 export const Route = createFileRoute("/")({
   component: Index,
@@ -38,28 +39,19 @@ function Index() {
     null;
 
   return (
-    <div className="flex min-h-screen flex-col items-center justify-center px-4">
+    <>
+    {session ? (
+      <AppHeader onShare={() => setOpen(true)} />
+    ) : (
       <div className="absolute right-6 top-6">
-        {session ? (
-          <Button
-            variant="ghost"
-            size="sm"
-            onClick={async () => {
-              await supabase.auth.signOut();
-            }}
-            className="gap-2 text-muted-foreground hover:text-foreground"
-          >
-            <LogOut className="h-4 w-4" />
-            Sign out
-          </Button>
-        ) : (
-          <Button asChild variant="ghost" size="sm">
-            <Link to="/auth" search={{ mode: "login" }}>
-              Sign in
-            </Link>
-          </Button>
-        )}
+        <Button asChild variant="ghost" size="sm">
+          <Link to="/auth" search={{ mode: "login" }}>
+            Sign in
+          </Link>
+        </Button>
       </div>
+    )}
+    <div className="flex min-h-screen flex-col items-center justify-center px-4">
 
       <div className="space-y-6 text-center">
         <div className="space-y-2">
@@ -125,5 +117,6 @@ function Index() {
 
       <CreateListDialog open={createOpen} onOpenChange={setCreateOpen} />
     </div>
+    </>
   );
 }
