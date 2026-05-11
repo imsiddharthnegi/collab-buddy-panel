@@ -97,6 +97,7 @@ function ListView() {
     setTasks((prev) => prev.filter((t) => t.id !== id));
 
   return (
+    <TooltipProvider delayDuration={150}>
     <div className="flex min-h-screen flex-col px-4 py-8 pb-32 sm:px-6 sm:py-16 sm:pb-16">
       <div className="mx-auto flex w-full max-w-2xl flex-1 flex-col">
         <Link
