@@ -10,7 +10,17 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import { AppHeader } from "@/components/app-header";
+import { SharePanel, type Collaborator } from "@/components/share-panel";
 import { cn } from "@/lib/utils";
+
+const LIST_TITLE = "Weekend Trip Plans";
+const SHARE_URL = "https://lists.app/share/weekend-trip-x8k2";
+const COLLABORATORS: Collaborator[] = [
+  { id: "1", name: "Alex Morgan" },
+  { id: "2", name: "Priya Shah" },
+  { id: "3", name: "Jordan Lee" },
+];
 
 type Creator = {
   name: string;
