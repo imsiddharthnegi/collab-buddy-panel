@@ -30,11 +30,18 @@ const initialTasks: Task[] = [];
 function ListView() {
   const [tasks, setTasks] = useState<Task[]>(initialTasks);
   const [draft, setDraft] = useState("");
+  const [composing, setComposing] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
 
   const active = tasks.filter((t) => !t.completed);
   const completed = tasks.filter((t) => t.completed);
   const isEmpty = tasks.length === 0;
+  const showAddBar = !isEmpty || composing;
+
+  const startComposing = () => {
+    setComposing(true);
+    requestAnimationFrame(() => inputRef.current?.focus());
+  };
 
   const addTask = () => {
     const text = draft.trim();
