@@ -97,10 +97,12 @@ export function AppHeader({
                   Share list
                 </DropdownMenuItem>
               )}
-              <DropdownMenuItem onSelect={onSettings}>
-                <Settings className="h-4 w-4" />
-                Settings
-              </DropdownMenuItem>
+              {onSettings && (
+                <DropdownMenuItem onSelect={onSettings}>
+                  <Settings className="h-4 w-4" />
+                  Settings
+                </DropdownMenuItem>
+              )}
               {showLeave && (
                 <DropdownMenuItem
                   onSelect={onLeave}

@@ -1,6 +1,8 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
-import { useRef, useState } from "react";
+import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
+import { useEffect, useRef, useState } from "react";
 import { ArrowLeft, Plus, Trash2 } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
+import type { Session } from "@supabase/supabase-js";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -73,11 +75,48 @@ export const Route = createFileRoute("/list")({
 const initialTasks: Task[] = [];
 
 function ListView() {
+  const navigate = useNavigate();
+  const [session, setSession] = useState<Session | null>(null);
+  const [loading, setLoading] = useState(true);
   const [tasks, setTasks] = useState<Task[]>(initialTasks);
   const [draft, setDraft] = useState("");
   const [composing, setComposing] = useState(false);
   const [shareOpen, setShareOpen] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
+
+  // Auth guard: redirect to auth if not logged in
+  useEffect(() => {
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange((_event, s) => {
+      setSession(s);
+      setLoading(false);
+      if (!s) {
+        navigate({ to: "/auth", search: { mode: "login" } });
+      }
+    });
+    supabase.auth.getSession().then(({ data }) => {
+      setSession(data.session);
+      setLoading(false);
+      if (!data.session) {
+        navigate({ to: "/auth", search: { mode: "login" } });
+      }
+    });
+    return () => subscription.unsubscribe();
+  }, [navigate]);
+
+  // Show loading state while checking auth
+  if (loading) {
+    return (
+      <div className="flex min-h-screen items-center justify-center">
+        <div className="h-8 w-8 animate-spin rounded-full border-2 border-muted-foreground border-t-transparent" />
+      </div>
+    );
+  }
+
+  if (!session) {
+    return null;
+  }
 
   const active = tasks.filter((t) => !t.completed);
   const completed = tasks.filter((t) => t.completed);
