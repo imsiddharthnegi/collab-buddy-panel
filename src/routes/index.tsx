@@ -1,11 +1,12 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
-import { Share2, LogOut, Plus } from "lucide-react";
+import { Share2, Plus } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import type { Session } from "@supabase/supabase-js";
 import { Button } from "@/components/ui/button";
 import { SharePanel, type Collaborator } from "@/components/share-panel";
 import { CreateListDialog } from "@/components/create-list-dialog";
+import { AppHeader } from "@/components/app-header";
 
 export const Route = createFileRoute("/")({
   component: Index,
