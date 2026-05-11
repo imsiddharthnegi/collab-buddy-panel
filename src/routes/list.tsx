@@ -116,8 +116,8 @@ function ListView() {
         )}
 
         {showAddBar && (
-          <div className="mt-12">
-            <div className="flex items-center gap-3 rounded-xl border border-border bg-card p-2 pl-4 transition focus-within:border-foreground/40">
+          <div className="fixed inset-x-0 bottom-0 z-20 border-t border-border bg-background/95 px-4 py-3 backdrop-blur supports-[backdrop-filter]:bg-background/80 sm:static sm:mt-12 sm:border-0 sm:bg-transparent sm:p-0 sm:backdrop-blur-0">
+            <div className="mx-auto flex w-full max-w-2xl items-center gap-3 rounded-xl border border-border bg-card p-2 pl-4 transition focus-within:border-foreground/40">
               <Plus className="h-4 w-4 text-muted-foreground" />
               <Input
                 ref={inputRef}
@@ -140,7 +140,7 @@ function ListView() {
                 type="button"
                 onClick={addTask}
                 disabled={!draft.trim()}
-                className="auth-primary h-9 px-4"
+                className="auth-primary h-10 px-4 sm:h-9"
               >
                 Add
               </Button>
