@@ -76,6 +76,7 @@ function ListView() {
   const [tasks, setTasks] = useState<Task[]>(initialTasks);
   const [draft, setDraft] = useState("");
   const [composing, setComposing] = useState(false);
+  const [shareOpen, setShareOpen] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
 
   const active = tasks.filter((t) => !t.completed);
@@ -108,7 +109,22 @@ function ListView() {
 
   return (
     <TooltipProvider delayDuration={150}>
-    <div className="flex min-h-screen flex-col px-4 py-8 pb-32 sm:px-6 sm:py-16 sm:pb-16">
+    <AppHeader
+      listTitle={LIST_TITLE}
+      onShare={() => setShareOpen(true)}
+      showLeave
+      onLeave={() => setShareOpen(true)}
+    />
+    <SharePanel
+      open={shareOpen}
+      onOpenChange={setShareOpen}
+      listTitle={LIST_TITLE}
+      shareUrl={SHARE_URL}
+      collaborators={COLLABORATORS}
+      isCreator={false}
+      onLeave={() => setShareOpen(false)}
+    />
+    <div className="flex min-h-screen flex-col px-4 py-8 pb-32 sm:px-6 sm:py-12 sm:pb-16">
       <div className="mx-auto flex w-full max-w-2xl flex-1 flex-col">
         <Link
           to="/"
@@ -123,7 +139,7 @@ function ListView() {
             Shared list
           </p>
           <h1 className="break-words text-3xl font-bold leading-tight tracking-tight sm:text-5xl">
-            Weekend Trip Plans
+            {LIST_TITLE}
           </h1>
         </header>
 
