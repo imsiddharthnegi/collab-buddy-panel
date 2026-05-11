@@ -84,13 +84,21 @@ function Index() {
                 New list
               </Button>
               <Button
-                onClick={() => setOpen(true)}
+                asChild
                 size="lg"
                 variant="outline"
                 className="auth-secondary gap-2"
               >
+                <Link to="/list">Open list</Link>
+              </Button>
+              <Button
+                onClick={() => setOpen(true)}
+                size="lg"
+                variant="ghost"
+                className="gap-2 text-muted-foreground hover:text-foreground"
+              >
                 <Share2 className="h-4 w-4" />
-                Share list
+                Share
               </Button>
             </>
           ) : (
