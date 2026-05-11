@@ -1,10 +1,11 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
-import { Share2, LogOut } from "lucide-react";
+import { Share2, LogOut, Plus } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import type { Session } from "@supabase/supabase-js";
 import { Button } from "@/components/ui/button";
 import { SharePanel, type Collaborator } from "@/components/share-panel";
+import { CreateListDialog } from "@/components/create-list-dialog";
 
 export const Route = createFileRoute("/")({
   component: Index,
@@ -20,6 +21,7 @@ const collaborators: Collaborator[] = [
 function Index() {
   const navigate = useNavigate();
   const [open, setOpen] = useState(false);
+  const [createOpen, setCreateOpen] = useState(false);
   const [session, setSession] = useState<Session | null>(null);
 
   useEffect(() => {
