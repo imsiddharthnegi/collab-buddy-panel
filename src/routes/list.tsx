@@ -4,13 +4,48 @@ import { ArrowLeft, Plus, Trash2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 import { cn } from "@/lib/utils";
+
+type Creator = {
+  name: string;
+};
 
 type Task = {
   id: string;
   text: string;
   completed: boolean;
+  creator: Creator;
 };
+
+const CURRENT_USER: Creator = { name: "You" };
+
+function initialsOf(name: string) {
+  if (name.toLowerCase() === "you") return "You";
+  return name
+    .split(/\s+/)
+    .filter(Boolean)
+    .slice(0, 2)
+    .map((p) => p[0]?.toUpperCase() ?? "")
+    .join("");
+}
+
+// Stable muted color per creator name
+function avatarTone(name: string) {
+  const tones = [
+    "bg-muted text-muted-foreground",
+    "bg-secondary text-secondary-foreground",
+    "bg-accent text-accent-foreground",
+  ];
+  let hash = 0;
+  for (let i = 0; i < name.length; i++) hash = (hash * 31 + name.charCodeAt(i)) | 0;
+  return tones[Math.abs(hash) % tones.length];
+}
 
 export const Route = createFileRoute("/list")({
   component: ListView,
