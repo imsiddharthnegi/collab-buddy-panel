@@ -126,9 +126,11 @@ export function SharePanel({
               )}
             </Button>
           </div>
-          <p className="text-xs text-muted-foreground">
-            Anyone with the link can view and edit this list.
-          </p>
+          {shareUrl && (
+            <p className="text-xs text-muted-foreground">
+              Anyone with the link can view and edit this list.
+            </p>
+          )}
         </div>
 
         <div className="space-y-3">

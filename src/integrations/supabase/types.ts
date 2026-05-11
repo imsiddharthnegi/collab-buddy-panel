@@ -14,6 +14,91 @@ export type Database = {
   }
   public: {
     Tables: {
+      lists: {
+        Row: {
+          id: string
+          title: string
+          created_by: string
+          created_at: string
+          share_slug: string
+        }
+        Insert: {
+          id?: string
+          title: string
+          created_by: string
+          created_at?: string
+          share_slug?: string
+        }
+        Update: {
+          id?: string
+          title?: string
+          created_by?: string
+          created_at?: string
+          share_slug?: string
+        }
+        Relationships: []
+      }
+      tasks: {
+        Row: {
+          id: string
+          list_id: string
+          title: string
+          completed: boolean
+          created_by: string
+          created_at: string
+        }
+        Insert: {
+          id?: string
+          list_id: string
+          title: string
+          completed?: boolean
+          created_by: string
+          created_at?: string
+        }
+        Update: {
+          id?: string
+          list_id?: string
+          title?: string
+          completed?: boolean
+          created_by?: string
+          created_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "tasks_list_id_fkey"
+            columns: ["list_id"]
+            isOneToOne: false
+            referencedRelation: "lists"
+            referencedColumns: ["id"]
+          }
+        ]
+      }
+      list_collaborators: {
+        Row: {
+          list_id: string
+          user_id: string
+          joined_at: string
+        }
+        Insert: {
+          list_id: string
+          user_id: string
+          joined_at?: string
+        }
+        Update: {
+          list_id?: string
+          user_id?: string
+          joined_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "list_collaborators_list_id_fkey"
+            columns: ["list_id"]
+            isOneToOne: false
+            referencedRelation: "lists"
+            referencedColumns: ["id"]
+          }
+        ]
+      }
       profiles: {
         Row: {
           avatar_url: string | null

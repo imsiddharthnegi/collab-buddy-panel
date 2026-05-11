@@ -12,6 +12,7 @@ import { Loader2 } from "lucide-react";
 export const Route = createFileRoute("/auth")({
   validateSearch: (s: Record<string, unknown>) => ({
     mode: s.mode === "signup" ? "signup" : "login",
+    returnTo: typeof s.returnTo === "string" ? s.returnTo : undefined,
   }),
   component: AuthPage,
   head: () => ({
@@ -45,18 +46,33 @@ function AuthPage() {
   const [loading, setLoading] = useState(false);
   const [googleLoading, setGoogleLoading] = useState(false);
 
+  const returnTo = search.returnTo;
+
   // Redirect away if already signed in
   useEffect(() => {
+    const redirectPath = returnTo ?? "/";
     const {
       data: { subscription },
     } = supabase.auth.onAuthStateChange((_event, session) => {
-      if (session) navigate({ to: "/" });
+      if (session) {
+        if (returnTo) {
+          window.location.href = returnTo;
+        } else {
+          navigate({ to: "/" });
+        }
+      }
     });
     supabase.auth.getSession().then(({ data }) => {
-      if (data.session) navigate({ to: "/" });
+      if (data.session) {
+        if (returnTo) {
+          window.location.href = returnTo;
+        } else {
+          navigate({ to: "/" });
+        }
+      }
     });
     return () => subscription.unsubscribe();
-  }, [navigate]);
+  }, [navigate, returnTo]);
 
   const toggleMode = () => {
     navigate({
@@ -104,7 +120,11 @@ function AuthPage() {
           toast.error(error.message);
           return;
         }
-        navigate({ to: "/" });
+        if (returnTo) {
+          window.location.href = returnTo;
+        } else {
+          navigate({ to: "/" });
+        }
       }
     } finally {
       setLoading(false);
