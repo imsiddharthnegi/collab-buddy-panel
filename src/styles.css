@@ -227,4 +227,48 @@
   .task-delete:focus-visible {
     opacity: 1;
   }
+
+  /* Snappy fade-out when removing a task */
+  .task-row[data-leaving="true"] {
+    animation: task-leave 200ms ease forwards;
+    pointer-events: none;
+  }
+  @keyframes task-leave {
+    to {
+      opacity: 0;
+      transform: translateY(-2px);
+    }
+  }
+
+  /* Task text: smooth fade between active and completed */
+  .task-text {
+    transition:
+      color 200ms ease,
+      opacity 200ms ease;
+  }
+  .task-text[data-completed="true"] {
+    color: var(--color-muted-foreground);
+    text-decoration: line-through;
+    text-decoration-color: var(--color-muted-foreground);
+  }
+
+  /* Animated checkbox */
+  .task-checkbox {
+    transition:
+      background-color 180ms ease,
+      border-color 180ms ease,
+      color 180ms ease;
+  }
+  .task-checkbox svg {
+    width: 0.9rem;
+    height: 0.9rem;
+  }
+  .task-checkbox svg path {
+    stroke-dasharray: 24;
+    stroke-dashoffset: 24;
+    transition: stroke-dashoffset 220ms ease;
+  }
+  .task-checkbox[data-state="checked"] svg path {
+    stroke-dashoffset: 0;
+  }
 }
