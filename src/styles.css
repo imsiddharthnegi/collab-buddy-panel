@@ -227,6 +227,12 @@
   .task-delete:focus-visible {
     opacity: 1;
   }
+  /* On touch devices, always show delete since hover doesn't apply */
+  @media (hover: none) {
+    .task-delete {
+      opacity: 1;
+    }
+  }
 
   /* Snappy fade-out when removing a task */
   .task-row[data-leaving="true"] {
