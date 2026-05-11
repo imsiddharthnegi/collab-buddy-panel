@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { ArrowLeft, Plus, Trash2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -25,13 +25,7 @@ export const Route = createFileRoute("/list")({
   }),
 });
 
-const initialTasks: Task[] = [
-  { id: "1", text: "Book the cabin for Friday night", completed: false },
-  { id: "2", text: "Pack hiking gear and water bottles", completed: false },
-  { id: "3", text: "Confirm carpool with Priya", completed: false },
-  { id: "4", text: "Pick up groceries from the market", completed: true },
-  { id: "5", text: "Charge the camera batteries", completed: true },
-];
+const initialTasks: Task[] = [];
 
 function ListView() {
   const [tasks, setTasks] = useState<Task[]>(initialTasks);
