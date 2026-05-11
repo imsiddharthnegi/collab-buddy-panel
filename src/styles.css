@@ -184,8 +184,8 @@
   }
 
   .auth-primary {
-    background-color: var(--color-foreground);
-    color: var(--color-background);
+    background-color: var(--color-primary);
+    color: var(--color-primary-foreground);
     border-radius: var(--radius-lg);
     font-weight: 500;
     transition:
@@ -194,7 +194,7 @@
       opacity 200ms ease;
   }
   .auth-primary:hover {
-    background-color: oklch(0.92 0.005 250);
+    background-color: oklch(0.74 0.08 220);
   }
   .auth-primary:active {
     transform: scale(0.99);
