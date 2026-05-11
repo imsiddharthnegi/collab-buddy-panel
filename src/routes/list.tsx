@@ -272,6 +272,20 @@ function TaskRow({
       >
         {task.text}
       </span>
+      <Tooltip delayDuration={150}>
+        <TooltipTrigger asChild>
+          <span
+            aria-label={`Added by ${task.creator.name}`}
+            className={cn(
+              "flex h-6 w-6 shrink-0 items-center justify-center rounded-full text-[10px] font-medium leading-none ring-1 ring-border/60",
+              avatarTone(task.creator.name),
+            )}
+          >
+            {initialsOf(task.creator.name)}
+          </span>
+        </TooltipTrigger>
+        <TooltipContent side="top">Added by {task.creator.name}</TooltipContent>
+      </Tooltip>
       <button
         type="button"
         onClick={handleDelete}
